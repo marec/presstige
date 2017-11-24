@@ -2,3 +2,4 @@
 presstige.sublime-project
 presstige.sublime-workspace
 *.map
+node_modules
