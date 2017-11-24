@@ -1,6 +1,6 @@
 /*!
 Theme Name: Presstige
-Theme URI: 
+Theme URI:
 Author: O2Sources
 Author URI: http://www.o2sources.com
 Description: A blank theme for starting a WordPress project based on <a href="http://underscores.me/"><em>underscores</em></a> but with css based on <a href="http://knacss.com/">knacss</a>.
@@ -66,21 +66,24 @@ License URI: http://codex.wordpress.org/License
 /* ----------------------------- */
 
 /* General */
-.container{
+.container {
     margin: 0 auto;
     max-width: 1280px;
-    padding: 0 15px;    
+    padding: 0 15px;
     position: relative;
-} 
+}
+
 /* Header */
-.site-branding{
+.site-branding {
     text-align: center;
     margin-top: 50px;
-    @media (min-width: ($small + 1)) {  
+
+    @media (min-width: ($small + 1)) {
         margin-top: 1rem;
     }
 }
-.icon-thumbnail{
+
+.icon-thumbnail {
     width: 100%;
     background-size: auto 100%;
     background-position: center;
@@ -88,7 +91,8 @@ License URI: http://codex.wordpress.org/License
     height: 200px;
     background-color: rgba(0,0,0,0.2);
 }
-.block-link{
+
+.block-link {
     display: block;
     width: 100%;
     height: 100%;
@@ -98,29 +102,31 @@ License URI: http://codex.wordpress.org/License
 .main-navigation {
     clear: both;
     display: block;
-    width: 100%;   
-    
+    width: 100%;
+
     //Menu principal
     > ul {
         display: flex;
         flex-wrap: wrap;
-        & > li{        
-            position: relative;     
-            > a{                
+
+        & > li {
+            position: relative;
+
+            > a {
                 display: block;
-                padding: 10px; 
-            }        
+                padding: 10px;
+            }
 
             &.current_page_item > a,
             &.current-menu-item > a,
             &.current_page_ancestor > a,
-            &.current-menu-ancestor > a {            
-                &::after{       
+            &.current-menu-ancestor > a {
+                &::after {
                     opacity: 1;
                 }
             }
 
-            &:nth-child(3){
+            &:nth-child(3) {
                 margin-left: auto;
             }
         }
@@ -133,12 +139,12 @@ License URI: http://codex.wordpress.org/License
 
         // Sous-menu
         ul {
-            a {   
+            a {
                 display: block;
                 padding: 10px;
             }
         }
-    }    
+    }
 
     a {
         text-decoration: none;
@@ -146,12 +152,13 @@ License URI: http://codex.wordpress.org/License
 }
 
 /*------ Responsive Nav button ------*/
-.btn-burger-checkbox{
+.btn-burger-checkbox {
     position: absolute;
     opacity: 0;
 }
+
 /* Nav closed = Checkbox unchecked */
-.btn-burger-label{
+.btn-burger-label {
     position: fixed;
     top: 0;
     left:0;
@@ -164,8 +171,9 @@ License URI: http://codex.wordpress.org/License
     display: inline-block;
     color:$color2;
     width: 100%;
+
     /* Nav open = Checkbox checked */
-    &::after{
+    &::after {
         content: "Fermer";
         display: inline-block;
         font-size: 2rem;
@@ -173,7 +181,8 @@ License URI: http://codex.wordpress.org/License
         text-transform: uppercase;
     }
 }
-.lines {  
+
+.lines {
     display: inline-block;
     width: 17px;
     height: 2px;
@@ -182,7 +191,8 @@ License URI: http://codex.wordpress.org/License
     position: relative;
     vertical-align: middle;
     margin-right: 10px;
-    &::before, &::after {        
+
+    &::before, &::after {
         display: inline-block;
         width: 17px;
         height: 2px;
@@ -193,62 +203,77 @@ License URI: http://codex.wordpress.org/License
         content: '';
         transform-origin: 5px center;
     }
-    &::before { top: -7px; }
-    &::after { top: 7px; }
+
+    &::before {
+        top: -7px;
+    }
+
+    &::after {
+        top: 7px;
+    }
 }
 
 /* Nav open = Checkbox checked */
-.btn-burger-checkbox{
-    &:not(:checked) ~ label::after{        
+.btn-burger-checkbox {
+    &:not(:checked) ~ label::after{
         content: "Menu";
     }
-    &:not(:checked) ~ label ~ nav .nav-menu{        
+
+    &:not(:checked) ~ label ~ nav .nav-menu {
         left:-100%;
     }
-    &:checked ~ label ~ nav .nav-menu{
+
+    &:checked ~ label ~ nav .nav-menu {
         left:0;
     }
-    &:checked ~ label .lines{    
+
+    &:checked ~ label .lines {
         background: transparent;
     }
-    &:checked ~ label .lines::before, 
-    &:checked ~ label .lines::after{
+
+    &:checked ~ label .lines::before,
+    &:checked ~ label .lines::after {
         transform-origin: 50% 50%;
         top:0;
         width: 17px;
     }
-    &:checked ~ label .lines::before{
-      transform: rotate3d(0,0,1,45deg); 
+
+    &:checked ~ label .lines::before {
+      transform: rotate3d(0,0,1,45deg);
     }
-    &:checked ~ label .lines::after{
-      transform: rotate3d(0,0,1,-45deg); 
+
+    &:checked ~ label .lines::after {
+      transform: rotate3d(0,0,1,-45deg);
     }
 }
 
 //Class spécifique au menu mobile
 @media (max-width: $small) {
     .main-navigation li,
-    .btn-burger-checkbox ~ label ~ nav .nav-menu{ display: block; }
+    .btn-burger-checkbox ~ label ~ nav .nav-menu {
+        display: block;
+    }
 
-    .main-navigation > ul{
+    .main-navigation > ul {
         overflow-y: scroll;
         width: 0;
         height: 0;
         transition: left .3s ease;
-        left:-100%;        
+        left:-100%;
         position: fixed;
-        background-color: $color1; 
+        background-color: $color1;
         width: 70%;
         top:45px;
         height: 100%;
         margin: 0;
         padding: 0;
-        a{            
+
+        a {
             color:$color2;
         }
     }
 
-    //Submenu mobile
+    /* Submenu mobile */
     .toggle-link {
         position: absolute;
         top: 0;
@@ -261,7 +286,7 @@ License URI: http://codex.wordpress.org/License
         background: rgba(255, 255, 255,0.1);
         cursor: pointer;
     }
-    /* arrow to indicate that we have subnav*/
+    /* Arrow to indicate that we have subnav */
     .toggle-link:after {
         content: "+";
         font-size: 16px;
@@ -301,23 +326,23 @@ License URI: http://codex.wordpress.org/License
     }
 }
 //Class spécifique au menu desktop
-@media (min-width: ($small + 1)) {    
+@media (min-width: ($small + 1)) {
     .btn-burger-label{
         display: none;
     }
 
     //Menu principal
-    .main-navigation > ul > li{
-        display: inline-block;   
+    .main-navigation > ul > li {
+        display: inline-block;
 
         &:hover > ul,
         &.focus > ul {
             left: 0;
-        }   
-        > a{                
+        }
+        > a {
             display: inline-block;
-            padding: 10px;        
-            &::after{
+            padding: 10px;
+            &::after {
                 content: '';
                 position: absolute;
                 top: 100%;
@@ -328,10 +353,10 @@ License URI: http://codex.wordpress.org/License
                 opacity: 0;
                 transition: opacity .3s,transform .3s;
             }
-        }       
+        }
 
         &:hover > a::after,
-        &.focus > a::after {                
+        &.focus > a::after {
             opacity: 1;
             transform: translateY(-7px);
         }
@@ -345,13 +370,14 @@ License URI: http://codex.wordpress.org/License
             position: absolute;
             top: 2.5em;
             left: -999em;
-            z-index: 9999;            
+            z-index: 9999;
             width: 220px;
             background-color: $color2;
 
-            a{   
-                position: relative;                
-                &::before{
+            a {
+                position: relative;
+
+                &::before {
                     content: '';
                     position: absolute;
                     top: 0;
@@ -362,9 +388,9 @@ License URI: http://codex.wordpress.org/License
                     opacity: 0;
                     transition: opacity .3s,transform .3s;
                 }
-                &:hover::before{
+                &:hover::before {
                     opacity: 1;
-                    transform: translateX(5px);            
+                    transform: translateX(5px);
                 }
             }
         }
@@ -382,7 +408,7 @@ License URI: http://codex.wordpress.org/License
 }
 
 .byline,
-.updated:not(.published){
+.updated:not(.published) {
     display: none;
 }
 
@@ -401,12 +427,15 @@ License URI: http://codex.wordpress.org/License
     clear: both;
     margin: 0 0 1.5em;
 }
+
 .comment-content a {
     word-wrap: break-word;
 }
+
 .bypostauthor {
     display: block;
 }
+
 .widget {
     margin: 0 0 1.5em;
 

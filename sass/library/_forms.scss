@@ -8,13 +8,13 @@
 
 /* buttons */
 .#{$kna-namespace}btn {
-  display: inline-block;
+    display: inline-block;
 }
 
 /* forms items */
 form,
 fieldset {
-  border: none;
+    border: none;
 }
 
 input,
@@ -22,8 +22,8 @@ button,
 select,
 label,
 .#{$kna-namespace}btn {
-  font-family: inherit;
-  font-size: inherit;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 button,
@@ -31,29 +31,29 @@ input,
 optgroup,
 select,
 textarea {
-  color: $color-base;
+    color: $color-base;
 }
 
 label {
-  vertical-align: middle;
-  cursor: pointer;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 legend {
-  border: 0;
-  white-space: normal;
+    border: 0;
+    white-space: normal;
 }
 
 textarea {
-  min-height: 5em;
-  vertical-align: top;
-  font-family: inherit;
-  font-size: inherit;
-  resize: vertical;
+    min-height: 5em;
+    vertical-align: top;
+    font-family: inherit;
+    font-size: inherit;
+    resize: vertical;
 }
 
 select {
-  -webkit-appearance: menulist-button;
+    -webkit-appearance: menulist-button;
 }
 
 /* if select styling bugs on WebKit */
@@ -61,56 +61,55 @@ select {
 
 /* 'x' appears on right of search input when text is entered. This removes it */
 input[type="search"] {
-  &::-webkit-search-decoration,
-  &::-webkit-search-cancel-button,
-  &::-webkit-search-results-button,
-  &::-webkit-search-results-decoration {
-    display: none;
-  }
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+        display: none;
+    }
 }
 
 ::-webkit-input-placeholder {
-  color: #777;
+    color: #777;
 }
 
 input:-moz-placeholder,
 textarea:-moz-placeholder {
-  color: #777;
+    color: #777;
 }
 
 .#{$kna-namespace}btn,
 input[type="button"],
 button {
-  &:focus {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-user-select: none;
-       -moz-user-select: none;
+&:focus {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-user-select: none;
+        -moz-user-select: none;
         -ms-user-select: none;
-            user-select: none;
-  }
+        user-select: none;
+    }
 }
 
 /* unstyled forms */
-
 button,
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  &.#{$kna-namespace}unstyled {
-    padding: 0;
-    border: none;
-    line-height: 1;
-    text-align: left;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+    &.#{$kna-namespace}unstyled {
+        padding: 0;
+        border: none;
+        line-height: 1;
+        text-align: left;
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
 
-    &:focus {
-      box-shadow: none;
-      outline: none;
+        &:focus {
+            box-shadow: none;
+            outline: none;
+        }
     }
-  }
 }

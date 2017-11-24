@@ -1,16 +1,16 @@
 <?php
 /* Based on http://wp.tutsplus.com/tutorials/using-the-settings-api-part-1-create-a-theme-options-page/ */
 
-if ( is_admin() ){	
+if ( is_admin() ){
 	add_action( 'admin_menu', 'presstige_add_menu' );
 	add_action( 'admin_init', 'presstige_register_settings' );
 }
 
-/* 
- * Define Constants 
- */  
-define('PRESSTIGE_SHORTNAME', 'presstige'); // used to prefix the individual setting field id see presstige_options_page_fields()  
-define('PRESSTIGE_PAGE_BASENAME', 'presstige-settings'); // the settings page slug 
+/*
+ * Define Constants
+ */
+define('PRESSTIGE_SHORTNAME', 'presstige'); // used to prefix the individual setting field id see presstige_options_page_fields()
+define('PRESSTIGE_PAGE_BASENAME', 'presstige-settings'); // the settings page slug
 
 /*
  * Include the required files
@@ -25,17 +25,17 @@ require_once('theme-options.php');
  */
 
 function presstige_get_settings() {
-	
+
 	$output = array();
-	
-	// put together the output array 
+
+	// put together the output array
 	$output['presstige_option_name'] 		= 'presstige_options';
 	$output['presstige_page_title'] 		= __('Theme Options','theme_name');
 	$output['presstige_page_sections'] 	= presstige_options_page_sections();
 	$output['presstige_page_fields'] 		= presstige_options_page_fields();
-	
+
 return $output;
-}  
+}
 /**
  * Helper function for registering our form field settings
  *
@@ -55,10 +55,10 @@ function presstige_create_settings_field( $args = array() ) {
 		'choices' => array(), 							// (optional): the values in radio buttons or a drop-down menu
 		'class'   => '' 								// the HTML form element class. Is used for validation purposes and may be also use for styling if needed.
 	);
-	
+
 	// "extract" to be able to use the array keys as variables in our function output below
 	extract( wp_parse_args( $args, $defaults ) );
-	
+
 	// additional arguments for use in form field output in the function presstige_form_field_fn!
 	$field_args = array(
 		'type'      => $type,
@@ -78,15 +78,15 @@ function presstige_create_settings_field( $args = array() ) {
  * Register our setting
  */
 function presstige_register_settings(){
-	
+
 	// get the settings sections array
 	$settings_output 	= presstige_get_settings();
 	$presstige_option_name = $settings_output['presstige_option_name'];
-	
+
 	//setting
 	// register_setting( $option_group, $option_name, $sanitize_callback );
 	register_setting($presstige_option_name, $presstige_option_name, 'presstige_validate_options' );
-	
+
 	//sections
 	// add_settings_section( $id, $title, $callback, $page );
 	if(!empty($settings_output['presstige_page_sections'])){
@@ -95,7 +95,7 @@ function presstige_register_settings(){
 			add_settings_section( $id, $title, 'presstige_section_fn', __FILE__);
 		}
 	}
-	
+
 	//fields
 	if(!empty($settings_output['presstige_page_fields'])){
 		// call the "add_settings_field" for each!
@@ -110,12 +110,12 @@ function presstige_register_settings(){
  * The Admin menu page
  */
 function presstige_add_menu(){
-	
+
 	$settings_output 		= presstige_get_settings();
 	// Display Settings Page link under the "Appearance" Admin Menu
 	$presstige_settings_page = add_theme_page(__('Theme Options'), __('Theme Options','theme_name'), 'manage_options', PRESSTIGE_PAGE_BASENAME, 'presstige_settings_page_fn');
 
-		
+
 }
 
 // ************************************************************************************************************
@@ -136,24 +136,24 @@ function  presstige_section_fn($desc) {
  * @return echoes output
  */
 function presstige_form_field_fn($args = array()) {
-	
+
 	extract( $args );
-	
+
 	// get the settings sections array
 	$settings_output 	= presstige_get_settings();
-	
+
 	$presstige_option_name = $settings_output['presstige_option_name'];
 	$options 			= get_option($presstige_option_name);
-	
+
 	// pass the standard value if the option is not yet set in the database
 	if ( !isset( $options[$id] ) && 'type' != 'checkbox' ) {
 		$options[$id] = $std;
 	}
-	
+
 	// additional field class. output only if the class is defined in the create_setting arguments
 	$field_class = ($class != '') ? ' ' . $class : '';
-	
-	// switch html display based on the setting type.	
+
+	// switch html display based on the setting type.
 	switch ( $type ) {
 		case 'text':
 			$options[$id] = stripslashes($options[$id]);
@@ -161,7 +161,7 @@ function presstige_form_field_fn($args = array()) {
 			echo "<input class='regular-text$field_class' type='text' id='$id' name='" . $presstige_option_name . "[$id]' value='$options[$id]' />";
 			echo ($desc != '') ? "<br /><span class='description'>$desc</span>" : "";
 		break;
-		
+
 		case "multi-text":
 			foreach($choices as $item) {
 				$item = explode("|",$item); // cat_name|cat_slug
@@ -179,7 +179,7 @@ function presstige_form_field_fn($args = array()) {
 			}
 			echo ($desc != '') ? "<span class='description'>$desc</span>" : "";
 		break;
-				
+
 		case 'checkbox':
 			echo "<input class='checkbox$field_class' type='checkbox' id='$id' name='" . $presstige_option_name . "[$id]' value='1' " . checked( $options[$id], 1, false ) . " />";
 			echo ($desc != '') ? "<br /><span class='description'>$desc</span>" : "";
@@ -189,68 +189,68 @@ function presstige_form_field_fn($args = array()) {
 
 /*
  * Admin Settings Page HTML
- * 
+ *
  * @return echoes output
  */
 function presstige_settings_page_fn() {
 // get the settings sections array
 	$settings_output = presstige_get_settings();
-	/*** To debug, use this to print the theme options **/      
+	/*** To debug, use this to print the theme options **/
 	// echo '<pre>';
 	// $options = get_option( 'presstige_options' );
-	// print_r($options); 
-	// echo '</pre>';    
+	// print_r($options);
+	// echo '</pre>';
 ?>
 
 	<div class="wrap">
 		<div class="icon32" id="icon-options-general"></div>
 		<h2><?php echo $settings_output['presstige_page_title']; ?></h2>
-		
+
 		<form action="options.php" enctype="multipart/form-data" method="post">
-			<?php 
+			<?php
 			// http://codex.wordpress.org/Function_Reference/settings_fields
-			settings_fields($settings_output['presstige_option_name']); 
+			settings_fields($settings_output['presstige_option_name']);
 			// http://codex.wordpress.org/Function_Reference/do_settings_sections
-			do_settings_sections(__FILE__); 
+			do_settings_sections(__FILE__);
 			?>
 			<p class="submit">
 				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes','theme_name'); ?>" />
 			</p>
-			
+
 		</form>
 	</div><!-- wrap -->
 <?php }
 
 /*
  * Validate input
- * 
+ *
  * @return array
  */
 function presstige_validate_options($input) {
-	
+
 	// for enhanced security, create a new empty array
 	$valid_input = array();
-	
+
 	// collect only the values we expect and fill the new $valid_input array i.e. whitelist our option IDs
-	
+
 		// get the settings sections array
 		$settings_output = presstige_get_settings();
-		
+
 		$options = $settings_output['presstige_page_fields'];
-		
+
 		// run a foreach and switch on option type
 		foreach ($options as $option) {
-		
+
 			switch ( $option['type'] ) {
 				case 'text':
 					//switch validation based on the class!
 					switch ( $option['class'] ) {
-						//for numeric 
+						//for numeric
 						case 'numeric':
 							//accept the input only when numeric!
 							$input[$option['id']] 		= trim($input[$option['id']]); // trim whitespace
 							$valid_input[$option['id']] = (is_numeric($input[$option['id']])) ? $input[$option['id']] : 'Expecting a Numeric value!';
-							
+
 							// register error
 							if(is_numeric($input[$option['id']]) == FALSE) {
 								add_settings_error(
@@ -261,19 +261,19 @@ function presstige_validate_options($input) {
 								);
 							}
 						break;
-						
+
 						//for multi-numeric values (separated by a comma)
 						case 'multinumeric':
 							//accept the input only when the numeric values are comma separated
 							$input[$option['id']] 		= trim($input[$option['id']]); // trim whitespace
-							
+
 							if($input[$option['id']] !=''){
 								// /^-?\d+(?:,\s?-?\d+)*$/ matches: -1 | 1 | -12,-23 | 12,23 | -123, -234 | 123, 234  | etc.
 								$valid_input[$option['id']] = (preg_match('/^-?\d+(?:,\s?-?\d+)*$/', $input[$option['id']]) == 1) ? $input[$option['id']] : __('Expecting comma separated numeric values','theme_name');
 							}else{
 								$valid_input[$option['id']] = $input[$option['id']];
 							}
-							
+
 							// register error
 							if($input[$option['id']] !='' && preg_match('/^-?\d+(?:,\s?-?\d+)*$/', $input[$option['id']]) != 1) {
 								add_settings_error(
@@ -284,21 +284,21 @@ function presstige_validate_options($input) {
 								);
 							}
 						break;
-						
+
 						//for no html
 						case 'nohtml':
 							//accept the input only after stripping out all html, extra white space etc!
 							$input[$option['id']] 		= sanitize_text_field($input[$option['id']]); // need to add slashes still before sending to the database
 							$valid_input[$option['id']] = addslashes($input[$option['id']]);
 						break;
-						
+
 						//for url
 						case 'url':
 							//accept the input only when the url has been sanited for database usage with esc_url_raw()
 							$input[$option['id']] 		= trim($input[$option['id']]); // trim whitespace
 							$valid_input[$option['id']] = esc_url_raw($input[$option['id']]);
 						break;
-						
+
 						//for email
 						case 'email':
 							//accept the input only after the email has been validated
@@ -308,7 +308,7 @@ function presstige_validate_options($input) {
 							}elseif($input[$option['id']] == ''){
 								$valid_input[$option['id']] = __('This setting field cannot be empty! Please enter a valid email address.','theme_name');
 							}
-							
+
 							// register error
 							if(is_email($input[$option['id']])== FALSE || $input[$option['id']] == '') {
 								add_settings_error(
@@ -319,53 +319,53 @@ function presstige_validate_options($input) {
 								);
 							}
 						break;
-						
+
 						// a "cover-all" fall-back when the class argument is not set
 						default:
 							// accept only a few inline html elements
 							$allowed_html = array(
 								'a' => array('href' => array (),'title' => array ()),
 								'b' => array(),
-								'em' => array (), 
+								'em' => array (),
 								'i' => array (),
 								'strong' => array()
 							);
-							
+
 							$input[$option['id']] 		= trim($input[$option['id']]); // trim whitespace
 							$input[$option['id']] 		= force_balance_tags($input[$option['id']]); // find incorrectly nested or missing closing tags and fix markup
 							$input[$option['id']] 		= wp_kses( $input[$option['id']], $allowed_html); // need to add slashes still before sending to the database
-							$valid_input[$option['id']] = addslashes($input[$option['id']]); 
+							$valid_input[$option['id']] = addslashes($input[$option['id']]);
 						break;
 					}
 				break;
-				
+
 				case "multi-text":
 					// this will hold the text values as an array of 'key' => 'value'
 					unset($textarray);
-					
+
 					$text_values = array();
 					foreach ($option['choices'] as $k => $v ) {
 						// explode the connective
 						$pieces = explode("|", $v);
-						
+
 						$text_values[] = $pieces[1];
 					}
-					
-					foreach ($text_values as $v ) {		
-						
+
+					foreach ($text_values as $v ) {
+
 						// Check that the option isn't empty
 						if (!empty($input[$option['id'] . '|' . $v])) {
 							// If it's not null, make sure it's sanitized, add it to an array
 							switch ($option['class']) {
 								// different sanitation actions based on the class create you own cases as you need them
-								
+
 								//for numeric input
 								case 'numeric':
 									//accept the input only if is numberic!
 									$input[$option['id'] . '|' . $v]= trim($input[$option['id'] . '|' . $v]); // trim whitespace
 									$input[$option['id'] . '|' . $v]= (is_numeric($input[$option['id'] . '|' . $v])) ? $input[$option['id'] . '|' . $v] : '';
 								break;
-								
+
 								// a "cover-all" fall-back when the class argument is not set
 								default:
 									// strip all html tags and white-space.
@@ -375,7 +375,7 @@ function presstige_validate_options($input) {
 							}
 							// pass the sanitized user input to our $textarray array
 							$textarray[$v] = $input[$option['id'] . '|' . $v];
-						
+
 						} else {
 							$textarray[$v] = '';
 						}
@@ -385,8 +385,8 @@ function presstige_validate_options($input) {
 						$valid_input[$option['id']] = $textarray;
 					}
 				break;
-				
-				
+
+
 				case 'checkbox':
 					// if it's not set, default to null!
 					if (!isset($input[$option['id']])) {
@@ -394,7 +394,7 @@ function presstige_validate_options($input) {
 					}
 					// Our checkbox value is either 0 or 1
 					$valid_input[$option['id']] = ( $input[$option['id']] == 1 ? 1 : 0 );
-				break;			
+				break;
 			}
 		}
 return $valid_input; // return validated input
@@ -418,21 +418,21 @@ function presstige_show_msg($message, $msgclass = 'info') {
  * @return calls presstige_show_msg()
  */
 function presstige_admin_msgs() {
-	
+
 	// check for our settings page - need this in conditional further down
 	// $presstige_settings_pg = strpos($_GET['page'], PRESSTIGE_PAGE_BASENAME);
-	
+
 	$presstige_settings_pg = get_current_screen();
 	// collect setting errors/notices: //http://codex.wordpress.org/Function_Reference/get_settings_errors
-	$set_errors = get_settings_errors(); 
-	
-	//display admin message only for the admin to see, only on our settings page and only when setting errors/notices are returned!	
+	$set_errors = get_settings_errors();
+
+	//display admin message only for the admin to see, only on our settings page and only when setting errors/notices are returned!
 	if(current_user_can ('manage_options') && $presstige_settings_pg !== FALSE && !empty($set_errors)){
 
-		// have our settings succesfully been updated? 
+		// have our settings succesfully been updated?
 		if($set_errors[0]['code'] == 'settings_updated' && isset($_GET['settings-updated'])){
 			presstige_show_msg("<p>" . $set_errors[0]['message'] . "</p>", 'updated');
-		
+
 		// have errors been found?
 		}else{
 			// there maybe more than one so run a foreach loop.
@@ -447,5 +447,3 @@ function presstige_admin_msgs() {
 
 // admin messages hook!
 add_action('admin_notices', 'presstige_admin_msgs');
-
-?>

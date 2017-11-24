@@ -6,22 +6,22 @@
  * @return array
  */
 function presstige_options_page_sections() {
-	
+
 	$sections = array();
 	$sections['social_section'] 		= __('Social networks', 'theme_name');
 	$sections['maintenance_section'] 	= __('Maintenance', 'theme_name');
-	
-	return $sections;	
+
+	return $sections;
 }
 
 /**
- * Define our form fields (settings) 
+ * Define our form fields (settings)
  *
  * @return array
  */
 function presstige_options_page_fields() {
 	// Text Form Fields section
-		
+
 	$options[] = array(
 		"section" => "social_section",
 		"id"      => PRESSTIGE_SHORTNAME . "_icon_social",
@@ -40,6 +40,5 @@ function presstige_options_page_fields() {
 		"type"    => "checkbox",
 		"std"     => 1 // 0 for off
 	);
-	return $options;	
+	return $options;
 }
- ?>
